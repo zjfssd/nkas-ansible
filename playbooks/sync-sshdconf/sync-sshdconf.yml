@@ -1,0 +1,15 @@
+---
+# get /etc/hosts form managernode
+
+- hosts: all
+  tasks:
+    - name: sync sshd_config file to all  hosts
+      copy:
+        src: /etc/ssh/sshd_config
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: 0600
+    - name: restart sshd service
+      service: name=sshd state=restarted
+#

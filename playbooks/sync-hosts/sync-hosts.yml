@@ -1,0 +1,21 @@
+---
+# get /etc/hosts form managernode
+
+- hosts: virtmanager
+  tasks:
+    - name: get hosts file from manager
+      fetch:
+        src: /etc/hosts
+        dest: /tmp/hosts
+        flat: yes
+
+- hosts: virtnodes
+  tasks:
+    - name: tranlate hosts file form manager to nodes
+      copy:
+        src: /tmp/hosts
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: 0644
+#

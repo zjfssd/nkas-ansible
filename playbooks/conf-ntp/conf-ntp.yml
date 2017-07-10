@@ -1,0 +1,28 @@
+---
+# config ntp server for all nodes
+
+- hosts: virtmanager
+  tasks: 
+    - name: install ntp
+      yum: name=ntp state=present
+
+    - name: start ntp service
+      service: name=ntpd state=started
+
+- hosts: virtnodes
+  vars:
+    ntpserver: 10.1.110.183
+  tasks:
+    - name: install ntp
+      yum: name=ntp state=present
+
+    - name: Config ntp server
+      template: src=ntp.conf.j2 dest=/etc/ntp.conf
+      notify: restart ntp
+
+    - name: start ntp service
+      service: name=ntpd state=started
+
+  handlers:
+    - name: restart ntp
+      service: name=ntpd state=restarted

@@ -1,0 +1,13 @@
+---
+# mkae local repo through iso file or cd/dvd device
+
+- hosts: local
+  vars:
+    mnt_dir: /mnt/localrepo
+    iso_sr: /dev/sr0
+  tasks:
+    - name: mount iso device
+      mount: path={{ mnt_dir }} src={{ iso_sr }} fstype=iso9660 opts=ro state=mounted
+    - name: create local repo file
+      template: src=local.repo.j2 dest=/etc/yum.repos.d/local.repo owner=root 
+           group=root mode=0644

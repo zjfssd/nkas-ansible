@@ -1,0 +1,13 @@
+---
+# update rpm
+
+- hosts: all
+  vars:
+  - package: "epel-release-latest-7.noarch.rpm"
+  tasks:
+  - name: upload new rpms
+    copy: src=/root/playbooks/rpm-update/{{ package }} dest=/tmp/{{ package}}
+  - name: install package
+    yum:
+      name: /tmp/{{ package}}
+      state: present

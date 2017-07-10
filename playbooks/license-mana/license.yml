@@ -1,0 +1,12 @@
+---
+- hosts: virtnodes
+  
+  tasks:
+  - name: get license info for now
+    shell: nklicadm -s
+  - name: get feedback code
+    shell: nklicadm -g
+  - name: Upload license file
+    template: src=abc.dat dest=/tmp/license.dat
+    notify: 
+    - install license

@@ -1,0 +1,5 @@
+---
+# Handler to handle License tier notifications
+
+- name: install license
+  shell: nklicadm -i /tmp/license.dat
